@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Distraction Blocker",
+  "version": "1.0.0",
+  "description": "A simple Chrome extension to block distracting websites.",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Distraction Blocker"
+  },
+  "permissions": ["storage", "tabs", "webNavigation"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content/index.tsx"],
+      "run_at": "document_start"
+    }
+  ]
+}
