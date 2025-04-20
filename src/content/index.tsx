@@ -1,6 +1,6 @@
-// import React from 'react'; // This is essential for JSX
-// import BlockedPage from "../components/BlockedPage";
-// import { createRoot } from "react-dom/client";
+import React from 'react'; // This is essential for JSX
+import BlockedPage from "../components/BlockedPage";
+import { createRoot } from "react-dom/client";
 
 // Simple function to check if this is Instagram
 function isInstagram() {
@@ -16,10 +16,8 @@ function blockPage() {
     document.body.appendChild(container);
 
     // Render the BlockedPage component
-    // const root = createRoot(container);
-    // root.render(React.createElement(BlockedPage, { url: window.location.href }));
-    // Alternative without JSX: 
-    // root.render(React.createElement(BlockedPage, { url: window.location.href }));
+    const root = createRoot(container);
+    root.render(React.createElement(BlockedPage, { url: window.location.href }));
 
     // Stop loading the rest of the page
     window.stop();
