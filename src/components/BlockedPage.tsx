@@ -1,6 +1,6 @@
 // src/components/BlockedPage.tsx
-import React from 'react';
-import './BlockedPage.css';
+import React from "react";
+import "./BlockedPage.css";
 
 interface BlockedPageProps {
   url: string;
@@ -11,11 +11,14 @@ const BlockedPage: React.FC<BlockedPageProps> = ({ url }) => {
     <div className="blocked-page">
       <div className="blocked-container">
         <h1>Access Blocked</h1>
-        <p>The site you're trying to visit has been blocked to help you stay productive.</p>
+        <p>
+          The site you&apos;re trying to visit has been blocked to help you stay
+          productive.
+        </p>
         <div className="blocked-url">{url}</div>
-        <button 
+        <button
           className="redirect-button"
-          onClick={() => window.location.href = "https://google.com"}
+          onClick={() => (window.location.href = "https://google.com")}
         >
           Go to Google
         </button>

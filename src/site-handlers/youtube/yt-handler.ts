@@ -11,12 +11,12 @@ export function YouTubeOnMutationHander() {
 
   if (settings.blockHome) {
     const homeLinks = body?.querySelectorAll(selectors.home);
-    homeLinks.forEach((link) => hide(link));
+    homeLinks.forEach(link => hide(link));
   }
 
   if (settings.blockShorts) {
     const shortsLinks = body?.querySelectorAll(selectors.shorts);
-    shortsLinks.forEach((link) => hide(link));
+    shortsLinks.forEach(link => hide(link));
   }
 
   if (
@@ -26,7 +26,7 @@ export function YouTubeOnMutationHander() {
   ) {
     const guideSections = body?.querySelectorAll("ytd-guide-section-renderer");
 
-    guideSections.forEach((section) => {
+    guideSections.forEach(section => {
       // Get element with id=guide-section-title
       const titleElement = section.querySelector("#guide-section-title");
 

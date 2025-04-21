@@ -7,23 +7,12 @@
     "default_popup": "index.html",
     "default_title": "Distraction Blocker"
   },
-  "permissions": [
-    "storage",
-    "tabs",
-    "webNavigation"
-  ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "permissions": ["storage", "tabs", "webNavigation"],
+  "host_permissions": ["<all_urls>"],
   "content_scripts": [
     {
-      "matches": [
-        "*://*.youtube.com/*",
-        "*://*.instagram.com/*"
-      ],
-      "js": [
-        "src/content/index.tsx"
-      ],
+      "matches": ["*://*.youtube.com/*", "*://*.instagram.com/*"],
+      "js": ["src/content/index.tsx"],
       "run_at": "document_start"
     }
   ]

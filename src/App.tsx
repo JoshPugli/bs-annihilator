@@ -1,24 +1,17 @@
-import './App.css';
+import "./App.css";
+import React from "react";
 
 function App() {
   // State for managing the list of blocked URLs
 
-  
   return (
+    <React.Fragment>
     <div className="app-container">
       <header className="app-header">
-        <h1>Site Blocker</h1>
+        <h1>I&apos;ll maybe put something here at some point</h1>
       </header>
-      
-      <main>
-
-        
-      </main>
-      
-      <footer className="app-footer">
-        <p>Stay productive by blocking distracting sites</p>
-      </footer>
     </div>
+    </React.Fragment>
   );
 }
 
