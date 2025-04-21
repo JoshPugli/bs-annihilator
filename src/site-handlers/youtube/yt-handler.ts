@@ -1,4 +1,5 @@
-import { removeUnwantedElements, redirectToSubscriptions, changePageTitle, observeTitleChanges } from "./utils/index.js";
+import { removeUnwantedElements, redirectToSubscriptions, changeTopLeftYTLogo } from "./utils/index.js";
+import { observeTitleChanges } from "./utils/index.js";
 
 export function YouTubeCleanup() {
     // Force navigation to subscriptions page on first load
@@ -7,7 +8,7 @@ export function YouTubeCleanup() {
     // Create an observer to watch for navigation elements
     const observer = new MutationObserver(() => {
         removeUnwantedElements();
-        changePageTitle();
+        changeTopLeftYTLogo();
     });
 
     // Start observing the document with the configured parameters
@@ -20,13 +21,13 @@ export function YouTubeCleanup() {
     document.addEventListener('DOMContentLoaded', () => {
         removeUnwantedElements();
         redirectToSubscriptions();
-        changePageTitle();
+        changeTopLeftYTLogo();
     });
 
     // Also handle YouTube's navigation events
     window.addEventListener('yt-navigate-finish', () => {
         removeUnwantedElements();
-        changePageTitle();
+        changeTopLeftYTLogo();
 
         // Check if we've navigated to homepage and redirect if needed
         const path = window.location.pathname;
@@ -37,7 +38,7 @@ export function YouTubeCleanup() {
 
     // Also try to clean up immediately
     removeUnwantedElements();
-    changePageTitle();
+    changeTopLeftYTLogo();
 
     // Observe title changes specifically
     observeTitleChanges();
