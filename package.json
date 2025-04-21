@@ -40,6 +40,6 @@
     "vite": "^6.3.2"
   },
   "lint-staged": {
-  "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
-}
+    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
+  }
 }
