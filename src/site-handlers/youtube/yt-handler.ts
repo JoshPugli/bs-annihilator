@@ -1,45 +1,87 @@
-import { removeUnwantedElements, redirectToSubscriptions, changeTopLeftYTLogo } from "./utils/index.js";
-import { observeTitleChanges } from "./utils/index.js";
+import { observeTitleChanges, changeTopLeftYTLogo } from "./utils/logos.js";
+import { defaultOptions, selectors } from "./lib.js";
 
 export function YouTubeCleanup() {
-    // Force navigation to subscriptions page on first load
-    redirectToSubscriptions();
+  // const settings = defaultOptions;
+  const mutationObserver = new MutationObserver(onMutation);
 
-    // Create an observer to watch for navigation elements
-    const observer = new MutationObserver(() => {
-        removeUnwantedElements();
-        changeTopLeftYTLogo();
-    });
+  const settings = defaultOptions;
 
-    // Start observing the document with the configured parameters
-    observer.observe(document.documentElement, {
-        childList: true,
-        subtree: true
-    });
+  function onMutation() {
+    const path = window.location.pathname;
+    const body = document.body;
 
-    // Initial cleanup when the page loads
-    document.addEventListener('DOMContentLoaded', () => {
-        removeUnwantedElements();
-        redirectToSubscriptions();
-        changeTopLeftYTLogo();
-    });
+    if (settings.blockHome) {
+      const homeLinks = body?.querySelectorAll(selectors.home);
+      homeLinks.forEach((link) => link.remove());
+    }
 
-    // Also handle YouTube's navigation events
-    window.addEventListener('yt-navigate-finish', () => {
-        removeUnwantedElements();
-        changeTopLeftYTLogo();
+    if (settings.blockShorts) {
+      const shortsLinks = body?.querySelectorAll(selectors.shorts);
+      shortsLinks.forEach((link) => link.remove());
+    }
 
-        // Check if we've navigated to homepage and redirect if needed
-        const path = window.location.pathname;
-        if (path === '/' || path === '/feed/recommended' || path === '/feed/explore') {
-            redirectToSubscriptions();
+    if (
+      settings.blockExplore ||
+      settings.blockSubscriptions ||
+      settings.blockMoreFromYouTube
+    ) {
+      const guideSections = body?.querySelectorAll(
+        "ytd-guide-section-renderer" 
+      );
+
+      guideSections.forEach((section) => {
+        // Get element with id=guide-section-title
+        const titleElement = section.querySelector("#guide-section-title");
+
+        if (titleElement && titleElement.textContent) {
+          const titleText = titleElement.textContent.trim();
+          if (settings.blockExplore && titleText === "Explore") {
+            section.remove();
+          } else if (
+            settings.blockSubscriptions &&
+            titleText === "Subscriptions"
+          ) {
+            section.remove();
+          } else if (
+            settings.blockMoreFromYouTube &&
+            titleText === "More from YouTube"
+          ) {
+            section.remove();
+          }
         }
-    });
+      });
+    }
 
-    // Also try to clean up immediately
-    removeUnwantedElements();
-    changeTopLeftYTLogo();
+    if (settings.replaceLogo) {
+      changeTopLeftYTLogo();
+    }
 
-    // Observe title changes specifically
-    observeTitleChanges();
+    if (settings.replaceTabTitle) {
+      observeTitleChanges();
+    }
+
+    if (
+      path === "/" ||
+      path === "/feed/recommended" ||
+      path === "/feed/explore"
+    ) {
+      const subscriptionsLink = document.querySelector(
+        'a[href="/feed/subscriptions"]'
+      );
+
+      if (subscriptionsLink) {
+        (subscriptionsLink as HTMLElement).click();
+      } else {
+        window.location.href = "/feed/subscriptions";
+      }
+    }
+  }
+
+  mutationObserver.observe(document, {
+    childList: true,
+    subtree: true,
+  });
+
+  onMutation();
 }

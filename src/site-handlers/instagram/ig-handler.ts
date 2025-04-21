@@ -1,5 +1,6 @@
 
-import { defaultOptions, selectors, urls, hide } from "./lib.js";
+import { defaultOptions, selectors, urls } from "./lib.js";
+import { hide } from "../utils.js";
 
 export function InstagramCleanup() {
     
