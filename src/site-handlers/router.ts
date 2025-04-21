@@ -1,8 +1,8 @@
 // import React from 'react'; // This is essential for JSX
 // import BlockedPage from "../components/BlockedPage";
 // import { createRoot } from "react-dom/client";
-import { YouTubeCleanup } from "./youtube/yt-handler";
-import { InstagramCleanup } from "./instagram/ig-handler";
+import { YouTubeOnMutationHander } from "./youtube/yt-handler";
+import { InstagramOnMutationHandler } from "./instagram/ig-handler";
 
 // function blockPage() {
 //     // Create a container div for React to render into
@@ -19,12 +19,23 @@ import { InstagramCleanup } from "./instagram/ig-handler";
 //     window.stop();
 // }
 
+function mutationHandler(onMutation: () => void) {
+  return () => {
+    const observer = new MutationObserver(onMutation);
+    observer.observe(document.documentElement || document, {
+      childList: true,
+      subtree: true,
+    });
+    onMutation();
+  };
+}
+
 export function getHandler(path: string): null | (() => void) {
   switch (true) {
     case path.includes("instagram.com"):
-      return InstagramCleanup;
+      return mutationHandler(InstagramOnMutationHandler);
     case path.includes("youtube.com"):
-      return YouTubeCleanup;
+      return mutationHandler(YouTubeOnMutationHander);
     default:
       return () => {};
   }
