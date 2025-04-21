@@ -1,8 +1,8 @@
 // import React from 'react'; // This is essential for JSX
 // import BlockedPage from "../components/BlockedPage";
 // import { createRoot } from "react-dom/client";
-import { YouTubeCleanup } from './youtube/yt-handler';
-import {  InstagramCleanup } from './instagram/ig-handler';
+import { YouTubeCleanup } from "./youtube/yt-handler";
+import { InstagramCleanup } from "./instagram/ig-handler";
 
 // function blockPage() {
 //     // Create a container div for React to render into
@@ -20,13 +20,12 @@ import {  InstagramCleanup } from './instagram/ig-handler';
 // }
 
 export function getHandler(path: string): null | (() => void) {
-    switch (true) {
-        case path.includes("instagram.com"):
-            return InstagramCleanup; 
-        case path.includes("youtube.com"):
-            return YouTubeCleanup; 
-        default:
-            return () => {}; 
-    }
-            
+  switch (true) {
+    case path.includes("instagram.com"):
+      return InstagramCleanup;
+    case path.includes("youtube.com"):
+      return YouTubeCleanup;
+    default:
+      return () => {};
+  }
 }

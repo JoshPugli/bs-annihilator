@@ -1,5 +1,6 @@
 import { observeTitleChanges, changeTopLeftYTLogo } from "./utils/logos.js";
 import { defaultOptions, selectors } from "./lib.js";
+import { hide } from "../utils.js";
 
 export function YouTubeCleanup() {
   // const settings = defaultOptions;
@@ -13,12 +14,12 @@ export function YouTubeCleanup() {
 
     if (settings.blockHome) {
       const homeLinks = body?.querySelectorAll(selectors.home);
-      homeLinks.forEach((link) => link.remove());
+      homeLinks.forEach((link) => hide(link));
     }
 
     if (settings.blockShorts) {
       const shortsLinks = body?.querySelectorAll(selectors.shorts);
-      shortsLinks.forEach((link) => link.remove());
+      shortsLinks.forEach((link) => hide(link));
     }
 
     if (
@@ -27,7 +28,7 @@ export function YouTubeCleanup() {
       settings.blockMoreFromYouTube
     ) {
       const guideSections = body?.querySelectorAll(
-        "ytd-guide-section-renderer" 
+        "ytd-guide-section-renderer"
       );
 
       guideSections.forEach((section) => {
@@ -37,17 +38,17 @@ export function YouTubeCleanup() {
         if (titleElement && titleElement.textContent) {
           const titleText = titleElement.textContent.trim();
           if (settings.blockExplore && titleText === "Explore") {
-            section.remove();
+            hide(section);
           } else if (
             settings.blockSubscriptions &&
             titleText === "Subscriptions"
           ) {
-            section.remove();
+            hide(section);
           } else if (
             settings.blockMoreFromYouTube &&
             titleText === "More from YouTube"
           ) {
-            section.remove();
+            hide(section);
           }
         }
       });
